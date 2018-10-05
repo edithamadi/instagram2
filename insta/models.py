@@ -1,11 +1,11 @@
 from django.db import models
 
 # Create your models here.
-
-class Profile(models.Model):
-   user = models.ForeignKey(User, on_delete=models.CASCADE)
+class User(models.Model):
    first_name = models.CharField(max_length=30)
    last_name = models.CharField(max_length=30)
+class Profile(models.Model):
+   user = models.ForeignKey(User, on_delete=models.CASCADE)
    bio = models.CharField(max_length=200)
    profile_photo = models.ImageField(
        upload_to='profile/')
