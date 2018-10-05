@@ -1,9 +1,6 @@
 from django.db import models
 
 # Create your models here.
-class User(models.Model):
-   first_name = models.CharField(max_length=30)
-   last_name = models.CharField(max_length=30)
 class Profile(models.Model):
    username = models.ForeignKey(User, on_delete=models.CASCADE)
    bio = models.CharField(max_length=200)
@@ -19,7 +16,10 @@ class Profile(models.Model):
    def delete_profile(self):
        self.delete()
 
-
+       @classmethod
+       def search_by_username(cls,search_term):
+           insta = cls.objects.filter(title__icontains=search_term)
+           return insta
 
 class Image(models.Model):
    image = models.ImageField(upload_to='images/')
