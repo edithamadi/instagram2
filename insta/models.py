@@ -28,7 +28,7 @@ class Image(models.Model):
    image_caption = models.TextField()
    likes = models.PositiveIntegerField(default=0)
    comment = models.CharField(max_length=30)
-   profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+#    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
    
    def __str__(self):
        return self.image_name 
