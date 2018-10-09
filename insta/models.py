@@ -8,6 +8,7 @@ class Profile(models.Model):
    bio = models.CharField(max_length=200)
    profile_photo = models.ImageField(upload_to='profile/')
 
+   
    def __str__(self):
        return self.username
 
@@ -19,8 +20,8 @@ class Profile(models.Model):
 
        @classmethod
        def search_user(cls,search_term):
-           insta = cls.objects.filter(title__icontains=search_term)
-           return insta
+           profile = cls.objects.filter(first_name__icontains=search_term)
+           return profile
 
 class Image(models.Model):
    image = models.ImageField(upload_to='images/')

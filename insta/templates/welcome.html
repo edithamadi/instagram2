@@ -1,17 +1,35 @@
 {% extends 'all-insta/base.html'%}
 {% block content%}
+
 <div class='container'>
 <h1> Welcome to Instagram</h1>
 <div class='row'>
-<div class='col-md-6'>
-{%for image in images%}
-<div  style="height:200px;width:200px;" class="card">
-    <img src="{{image.image.url}}" alt="image">
-    <p>{{image.image_caption}}</p>
 
-</div>
+{%for image in images%}
+<div class='col-md-3'>
+
+
+<p><b>Image Caption:</b> {{image.image_caption}}</p>
+    <div class="gallery-item">
+
+        <img src="{{image.image.url}}"  style="width: 450px; height: 450px" alt="image">
+
+        
+        <div class="gallery-item-info" col-md-8>
+
+            <ul>
+                <li class="gallery-item-likes"><span class="visually-hidden">...</span><i class="fas fa-heart" aria-hidden="true"></i></li>
+                <li class="gallery-item-comments"><span class="visually-hidden">...</span><i class="fas fa-comment" aria-hidden="true"></i></li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    
+
 {%endfor%}
-</div>
-</div>
+        </div>
+    </div>
 </div>
 {%endblock%}

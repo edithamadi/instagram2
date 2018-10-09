@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Image
 from .forms import InstaForm
@@ -26,25 +26,33 @@ def new_img(request):
     return render(request, 'new_img.html', {"form": form})
 @login_required(login_url='/accounts/login/')
 
-def search_image(request):
-    if 'image' in request.GET and request.GET["image"]:
-        search_term = request.GET.get("image")
-        searched_images = Image.search_image(search_term)
+def search_profile(request):
+    if 'profile' in request.GET and request.GET["profile"]:
+        search_term = request.GET.get("profile")
+        searched_profiles = Profile.search_profile(search_term)
         message = f"{search_term}" 
 
-        return render(request, 'all-insta/search.html',{"message":message,"images": searched_images})
+        return render(request, 'all-insta/search.html',{"message":message,"profiles": searched_profiles})
     else:
         message = "No results found"
 
         return render(request, 'all-insta/search.html',{"message":message})
 
     if request.method == 'POST':
-        form = NewsLetterForm(request.POST)
+        form = InstaForm(request.POST)
 
     if form.is_valid():
         print('valid')
     else:
-        form = NewsLetterForm()
+        form = InstaForm()
     
     return render(request, 'all-insta/email.html', {"letterForm":form})
+
+@login_required(login_url='/accounts/login/')
+def profile(request):
+    current_user = request.user
+    profile = Profile.get_profile()
+    image = Image.get_images()
+    comments = Comment.get_comment()
+    return render(request,'registration/profile.html',{"comments":comments,"image":image,"user":current_user,"profile":profile,})
     

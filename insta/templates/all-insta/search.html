@@ -1,2 +1,66 @@
-{%extends 'all-insta/base.html'%} 
+{% load bootstrap3 %}
+{% load static%}
+
+{% block styles %}
+ {% bootstrap_css %}
+ <link rel="stylesheet" href="{% static 'css/baseinstagram.css' %}">
+{% endblock %}
 {% block content %}
+<header>
+   {% if username %}
+     <h2>Found profile of person {{message}}</h2>
+   {% else %}
+     <h2> Found 0 people for the search name entered </h2>
+     <h2>{{message}}</h2>
+   {% endif %}
+
+    <div class="container">
+       {% if username %}
+{% for user in username %}
+    
+            <div class="profile">
+    
+                <div class="profile-image">
+    
+                    <img src="{{profile_item.profile_photo.url}}" alt="">
+    
+                </div>
+    
+                <div class="profile-user-settings">
+    
+                    <h1 class="profile-user-name">"{{profile_item.first_name}}"</h1>
+    
+                    <button class="btn profile-edit-btn">Edit Profile</button>
+    
+                    <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+    
+                </div>
+    
+                <div class="profile-stats">
+    
+                    <ul>
+                        <li><span class="profile-stat-count">64</span> posts</li>
+                        <li><span class="profile-stat-count">88</span> followers</li>
+                        <li><span class="profile-stat-count">26</span> following</li>
+                    </ul>
+    
+                </div>
+    
+                <div class="profile-bio">
+    
+                    <p><span class="profile-real-name">{{profile_item.first_name}}&nbsp;&nbsp; {{profile_item.last_name}}</span> {{profile_item.bio}}️</p>
+    
+                </div>
+    
+            </div>
+            <!-- End of profile section -->
+    {%endfor%}
+    {%endif%}
+        </div>
+        <!-- End of container -->
+    
+    </header>
+        <main>
+
+                        </div>
+                 {%endblock%}       
