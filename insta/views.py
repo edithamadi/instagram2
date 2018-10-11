@@ -1,8 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect ,get_object_or_404
 from django.http import HttpResponse
-from .models import Image
-from .forms import InstaForm
+from .models import Image,Profile
+from .forms import InstaForm,ProfileForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def welcome(request):
@@ -24,12 +25,13 @@ def new_img(request):
     else:
         form = InstaForm()
     return render(request, 'new_img.html', {"form": form})
-@login_required(login_url='/accounts/login/')
 
+@login_required(login_url='/accounts/login/')
 def search_profile(request):
-    if 'profile' in request.GET and request.GET["profile"]:
-        search_term = request.GET.get("profile")
+    if 'search' in request.GET and request.GET["search"]:
+        search_term = request.GET["search"]
         searched_profiles = Profile.search_profile(search_term)
+        print(searched_profiles)
         message = f"{search_term}" 
 
         return render(request, 'all-insta/search.html',{"message":message,"profiles": searched_profiles})
@@ -38,21 +40,43 @@ def search_profile(request):
 
         return render(request, 'all-insta/search.html',{"message":message})
 
-    if request.method == 'POST':
-        form = InstaForm(request.POST)
+@login_required(login_url='/accounts/login/')
+def profile(request , user_username = None):
 
-    if form.is_valid():
-        print('valid')
+    if user_username == None:
+        user = request.user 
     else:
-        form = InstaForm()
-    
-    return render(request, 'all-insta/email.html', {"letterForm":form})
+        user = get_object_or_404(User ,username = user_username)
+
+    images = Image.get_user_images(user).order_by('-id')[::-1]
+    profile = Profile.get_user_profile(user)
+
+    data = {
+        'images' : images ,
+        'profile' : profile , 
+        
+    }
+
+    return render(request,'registration/profile.html', data )
+
+
 
 @login_required(login_url='/accounts/login/')
-def profile(request):
-    current_user = request.user
-    profile = Profile.get_profile()
-    image = Image.get_images()
-    comments = Comment.get_comment()
-    return render(request,'registration/profile.html',{"comments":comments,"image":image,"user":current_user,"profile":profile,})
-    
+def update_profile(request):
+    if request.method == 'POST':
+        user_form = InstaForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, ('Your profile was successfully updated!'))
+            return redirect('settings:profile')
+        else:
+            messages.error(request, _('Please correct the error below.'))
+    else:
+        user_form = InstaForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'profiles/profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
