@@ -1,96 +1,45 @@
-{%extends 'base.html'%}
-
+{% extends 'registration/base.html' %}
 {% load bootstrap3 %}
-{% load static%}
 
-{% block styles %}
- {% bootstrap_css %}
- <link rel="stylesheet" href="{% static 'css/baseinstagram.css' %}">
-{% endblock %}
-{% block content %}
-{{block super}}
-<header>
-   {% if profiles %}
-     <h2>Found profile of person {{message}}</h2>
-   {% else %}
-     <h2> Found 0 people for the search name entered </h2>
-     <h2>{{message}}</h2>
-   {% endif %}
+{% load static %}
+{% block content%}
+{{ block.super }}
 
-    <div class="container">
-       {% if profiles %}
-{% for profile_item in profiles %}
-    
-            <div class="profile">
-    
-                <div class="profile-image">
-    
-                    <img src="{{profile_item.profile_photo.url}}" alt="">
-    
-                </div>
-    
-                <div class="profile-user-settings">
-    
-                    <h1 class="profile-user-name">"{{profile_item.first_name}}"</h1>
-    
-                    <button class="btn profile-edit-btn">Edit Profile</button>
-    
-                    <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
-    
-                </div>
-    
-                <div class="profile-stats">
-    
-                    <ul>
-                        <li><span class="profile-stat-count">64</span> posts</li>
-                        <li><span class="profile-stat-count">88</span> followers</li>
-                        <li><span class="profile-stat-count">26</span> following</li>
-                    </ul>
-    
-                </div>
-    
-                <div class="profile-bio">
-    
-                    <p><span class="profile-real-name">{{profile_item.first_name}}&nbsp;&nbsp; {{profile_item.last_name}}</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
-    
-                </div>
-    
-            </div>
-            <!-- End of profile section -->
-    
+
+<div class="container" style="float:left; padding-top:120px">
+    <div class="row">
+
+        <div class="col-md-6">
+            {% if profile.profile_photo %}
+                <img src="{{profile.profile_photo.url}}" alt="" style="border-radius:50%; width:300px; height:300px; padding:0px; margin:0px;">
+                
+            {% endif %}
+            <p>{{user.profile.bio}}</p>
+            <p>{{profile.user.username}}</p>
+            
+
         </div>
-        <!-- End of container -->
-    
-    </header>
-    
+        <div class="col-md-6">
+            <p>Follow</p>
 
-    <main>
+            <a href=""><button>Edit Profile</button></a>
+        </div>
 
-            <div class="container">
-        
-               <!-- <p><span><img class="profile-img" src="{{user.profile.user_pic.url}}"/></span><span>{{ user.username}}</span> {{comment.comment}} </p> -->
-        
-               {% for image in profile_item.profile.all %}
-                <div class="gallery">
-        
-                        <div class="gallery-item">
 
-                                <img src="{{image.image.url}}"  style="width: 450px; height: 450px" alt="image">
-                        
-                                
-                                <div class="gallery-item-info" col-md-8>
-                        
-                                    <ul>
-                                        <li class="gallery-item-likes"><span class="visually-hidden">...</span><i class="fas fa-heart" aria-hidden="true"></i></li>
-                                        <li class="gallery-item-comments"><span class="visually-hidden">...</span><i class="fas fa-comment" aria-hidden="true"></i></li>
-                                    </ul>
-                        
-                                </div>
-                        
-                            </div>
-                        
-                        {%endfor%}
-                                </div>
-                            </div>
-                        </div>
-                        {%endblock%}
+
+    </div>
+    <div class="row">
+        {% if images %}
+            {% for image in images %}
+                <div class="col-md-4">
+                    <img width="200px" height="auto"   src="{{ image.image.url }}" alt="">
+                </div>
+            {% endfor %}
+        {% else %}
+            No images
+        {% endif %}
+    </div>
+</div>
+</div>
+
+{% endblock %}

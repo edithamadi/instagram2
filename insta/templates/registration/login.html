@@ -1,5 +1,5 @@
-{%extends "registration/base.html"%}
-{% load bootstrap3 %}
+{%extends "registration/base.html"%} 
+{% load bootstrap3 %} 
 {% block content %}
 <div class="container">
   <div class="row">
@@ -7,7 +7,7 @@
     <div class="col-md-4"></div>
     <div class="col-md-4">
       {% if form.errors %}
-        <p> Password or Username is incorrect </p>
+      <p> Password or Username is incorrect </p>
       {% endif %}
       <div class="panel panel-default">
 
@@ -16,17 +16,19 @@
         </div>
         <div class="panel-body">
 
-          <form  action="/accounts/login/" method="post">
-            {% csrf_token %}
+          <form action="/accounts/login/" method="post">
+            {% csrf_token %} 
             {% bootstrap_form form%}
-
+            
             <div class="form-group">
-              <input type="submit" class="btn btn-primary btn-sm" value="Login">
+              <input style="background-color:#3897f0" type="submit" class="btn btn-primary btn-lg btn-block" value="Login">
             </div>
-            <p>dont have an account <a href="/accounts/register">register here</a></p>
-
-            <input type="hidden" name="next" value="{{next}}">
-
+            <div class="list-group">
+              <p class="list-group-item list-group-item-action">
+                Do you have an account ? <a href="/accounts/register"> Sign Up </a>
+              </p>
+            </div>
+            <br>
           </form>
 
         </div>

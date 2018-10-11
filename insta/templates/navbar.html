@@ -26,9 +26,9 @@
       
             <a href="/logout">Logout</a>&nbsp;&nbsp;
         
-            <a href="{%url 'new_img'%}">post</a>&nbsp;&nbsp;
+            <a href="{%url 'new_img'%}">Add image</a>&nbsp;&nbsp;
           
-          <a class="fa fa-compass" href="#"></a><a class="fa fa-heart" href="#"></a><a class="fa fa-user" href="profile.html"></a>
+          <a class="fa fa-compass" href="#"></a><a class="fa fa-heart" href="#"></a><a class="fa fa-user" href="/{{ request.user }}"></a>
       
        
         </section>
