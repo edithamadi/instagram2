@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
-    <nav class="navbar">
-        <section class="logo-section"><img class="logo" src="https://seeklogo.com/images/I/instagram-new-2016-glyph-logo-84CB825424-seeklogo.com.png"/>
-          <div></div><img class="logoname" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2000px-Instagram_logo.svg.png"/>
-        </section>
-        <form class="search-section" role = "search" action ="{% url 'search_profile' %}" >
-          <input class="input-search" type="search" name="search" placeholder="Search"/>
-        </form>
+  <nav class="navbar">
+    <section class="logo-section"><img class="logo" src="https://seeklogo.com/images/I/instagram-new-2016-glyph-logo-84CB825424-seeklogo.com.png"
+      />
+      <div></div><img class="logoname" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2000px-Instagram_logo.svg.png"
+      />
+    </section>
+    <form class="search-section" role="search" action="{% url 'search_profile' %}">
+      <input class="input-search" type="search" name="search" placeholder="Search" />
+    </form>
 
-        <div class="col-sm-6 col-md-6">
-            {% if user.is_authenticated %}
-              
-        <section class="icons-section">
-          
-            <a href="/accounts/password/change">Change Password</a>&nbsp;&nbsp;
-      
-      
-            <a href="/logout">Logout</a>&nbsp;&nbsp;
-        
-            <a href="{%url 'new_img'%}">Add image</a>&nbsp;&nbsp;
-          
-          <a class="fa fa-compass" href="#"></a><a class="fa fa-heart" href="#"></a><a class="fa fa-user" href="/{{ request.user }}"></a>
-      
-       
-        </section>
-{% else %}
-  <a class='btn btn-default' href="/accounts/login">Login</a>&nbsp;&nbsp;
+    <div class="col-sm-6 col-md-6">
+      {% if user.is_authenticated %}
 
-{% endif %}
-</div>
-      
-      </nav>
+      <section class="icons-section">
+
+        <a href="/accounts/password/change">Change Password</a>&nbsp;&nbsp;
+
+
+        <a href="/accounts/logout">Logout</a>&nbsp;&nbsp;
+
+        <a href="{%url 'new_img'%}">Add image</a>&nbsp;&nbsp;
+
+        <a class="fa fa-compass" href="#"></a><a class="fa fa-heart" href="#"></a><a class="fa fa-user" href="/{{ request.user }}"></a>
+
+
+      </section>
+      {% else %}
+      <a class='btn btn-default' href="{% url 'signup' %}">Login</a>&nbsp;&nbsp; 
+      {% endif %}
+    </div>
+
+  </nav>
 </body>
+
 </html>

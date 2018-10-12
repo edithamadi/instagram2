@@ -120,3 +120,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 LOGIN_REDIRECT_URL = 'welcome'
+# SIGNUP_REDIRECT_URL = 'login'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'edithmcamadi5@gmail.com'
+EMAIL_HOST_PASSWORD = 'JASMINE5e'
+EMAIL_PORT = 587
