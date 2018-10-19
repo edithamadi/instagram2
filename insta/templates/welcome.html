@@ -22,11 +22,32 @@
                 <li class="gallery-item-comments"><span class="visually-hidden">...</span><i class="fas fa-comment" aria-hidden="true"></i></li>
             </ul>
 
+
         </div>
 
     </div>
+    {% for imag in image.comment_set.all %}
+    <ul>
+            {{imag.comment_text}}
 
+    </ul>
+    {{imag.profile.user.username}}
+    {% endfor %}
     
+    {% if request.user.is_authenticated %}
+    <section class="input-row">
+      <i class="fa # submit-like" aria-hidden="true"></i>
+      <div class="comment-input-wrapper">
+          <form action="{% url 'comment' post_id=image.id %}" method="post">
+              {% csrf_token %}
+              <input class="add-comment" name="comment_text" id="comment{{image.id}}" type="text" placeholder="Add a comment...">
+</form>
+      </div>
+      <div class="hidden-data {{ post.pk }}" style="display: none;">
+        <span class="post-pk">{{ post.pk }}</span>
+      </div>
+    </section>
+  {% endif %}
 
 {%endfor%}
         </div>

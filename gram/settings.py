@@ -11,6 +11,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'c=7=$4tl)otenpu_lo4php+xp$-vj-b*nt-6%yimh@iq5ql#95'
@@ -146,12 +151,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 LOGIN_REDIRECT_URL = 'welcome'
-# SIGNUP_REDIRECT_URL = 'login'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'edithmcamadi5@gmail.com'
-EMAIL_HOST_PASSWORD = 'JASMINE5e'
-EMAIL_PORT = 587
+
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())

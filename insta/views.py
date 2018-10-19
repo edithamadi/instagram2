@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect ,get_object_or_404
 from django.http import HttpResponse
 from .models import Image,Profile
-from .forms import InstaForm,ProfileForm,SignupForm
+from .forms import InstaForm,ProfileForm,SignupForm,CommentForm,UserForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
@@ -58,7 +58,7 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 @login_required(login_url='/accounts/login/')
 def welcome(request):
-    images=Image.objects.all()
+    images=Image.get_images().order_by('-posted_on')
 
     return render(request,'welcome.html',{'images':images})
     
@@ -92,7 +92,7 @@ def search_profile(request):
         return render(request, 'all-insta/search.html',{"message":message})
 
 # @login_required(login_url='/accounts/login/')
-def profile(request , user_username = None):
+def profilee(request , user_username = None):
 
     if user_username == None:
         user = request.user 
@@ -113,22 +113,36 @@ def profile(request , user_username = None):
 
 
 # @login_required(login_url='/accounts/login/')
-def update_profile(request):
+def profile(request):
+
     if request.method == 'POST':
-        user_form = InstaForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, ('Your profile was successfully updated!'))
-            return redirect('settings:profile')
-        else:
-            messages.error(request, _('Please correct the error below.'))
+        u_form = UserForm(request.POST, instance=request.user)
+        p_form = ProfileForm(request.POST,
+                                   request.FILES,
+                                   instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            return redirect('profile')
+
     else:
-        user_form = InstaForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'profiles/profile.html', {
-        'user_form': user_form,
-        'profile_form': profile_form
-    })
-  
+        u_form = UserForm(instance=request.user)
+        p_form = ProfileForm()
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
+
+    return render(request, 'registration/profile.html', context)
+def add_comment(request,post_id):
+    post = get_object_or_404(Image, pk=post_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.post = post
+            comment.save()
+            print('fgccccccccccccfffff')
+    return redirect('welcome')

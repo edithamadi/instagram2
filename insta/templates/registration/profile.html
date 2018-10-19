@@ -1,4 +1,4 @@
-{% extends 'registration/base.html' %}
+{% extends 'all-insta/base.html' %}
 {% load bootstrap3 %}
 
 {% load static %}
@@ -19,12 +19,27 @@
             
 
         </div>
-        <div class="col-md-6">
-            <p>Follow</p>
+        
+                  {% if user.profile.profile_photo %}
 
-            <a href=""><button>Edit Profile</button></a>
-        </div>
-
+                <img class="rounded-circle account-img" style="border-radius:50%;height:200px; width:200px;" src="{{ user.profile.profile_photo.url }}">
+                {% endif %}
+                <div class="media-body">
+                  <h2 class="account-heading">{{ user.username }}</h2>
+                  <p class="text-secondary">{{ user.email }}</p>
+                </div>
+              <form method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <fieldset class="form-group">
+                      <legend class="border-bottom mb-4">Profile Info</legend>
+                      {{ u_form }}
+                      {{ p_form }}
+                  </fieldset>
+                  <div class="form-group">
+                      <button class="btn btn-outline-info" type="submit">Update</button>
+                  </div>
+              </form>
+            </div>
 
 
     </div>
