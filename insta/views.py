@@ -58,7 +58,7 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 @login_required(login_url='/accounts/login/')
 def welcome(request):
-    images=Image.get_images().order_by('-posted_on')
+    images=Image.get_images().order_by('posted_on')
 
     return render(request,'welcome.html',{'images':images})
     

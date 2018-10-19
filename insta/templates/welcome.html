@@ -22,16 +22,16 @@
                 <li class="gallery-item-comments"><span class="visually-hidden">...</span><i class="fas fa-comment" aria-hidden="true"></i></li>
             </ul>
 
-
         </div>
 
     </div>
     {% for imag in image.comment_set.all %}
     <ul>
-            {{imag.comment_text}}
-
+    <br>
+<b>Comment:     </b> {{imag.comment_text}}
+<br>
     </ul>
-    {{imag.profile.user.username}}
+   Username: {{imag.profile.user.username}}
     {% endfor %}
     
     {% if request.user.is_authenticated %}
@@ -42,6 +42,7 @@
               {% csrf_token %}
               <input class="add-comment" name="comment_text" id="comment{{image.id}}" type="text" placeholder="Add a comment...">
 </form>
+<br>
       </div>
       <div class="hidden-data {{ post.pk }}" style="display: none;">
         <span class="post-pk">{{ post.pk }}</span>

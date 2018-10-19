@@ -49,8 +49,7 @@ class Profile(models.Model):
     @classmethod
     def filter_by_id(cls,id):
         profile = Profile.objects.filter(user_id=id).all
-        return profile
-
+        return profileComment
 class Image(models.Model):
     user = models.ForeignKey(User ,on_delete = models.CASCADE )
     image = models.ImageField(upload_to='images/')
@@ -81,7 +80,7 @@ class Image(models.Model):
     def get_images(cls):
         images = Image.objects.all()
         return images
-        
+
     @classmethod
     def get_user_images(cls ,user):
         images = cls.objects.filter(user = user)

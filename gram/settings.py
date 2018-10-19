@@ -25,11 +25,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
     'bootstrap3',
+    'bootstrap4',
     'insta.apps.InstaConfig',
     'django.contrib.admin',
     'django.contrib.auth',

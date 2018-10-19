@@ -12,7 +12,7 @@ class ProfileForm(forms.ModelForm):
         
         widgets = {
             'bio': forms.TextInput(attrs={'placeholder': 'Bio'}),
-            'first_name': forms.TextInput(attrs={'placeholder': 'Name'}),
+            'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
             }
         exclude = ['user', 'last_name']
 
